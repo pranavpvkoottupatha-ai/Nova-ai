@@ -2,12 +2,13 @@ import discord
 from discord.ext import commands
 import os
 
-# Bot permissions
+# =========================
+# BOT SETTINGS
+# =========================
+
 intents = discord.Intents.default()
 intents.message_content = True
 
-# Create bot
-# help_command=None disables Discord.py's built-in !help command
 bot = commands.Bot(
     command_prefix="!",
     intents=intents,
@@ -15,15 +16,23 @@ bot = commands.Bot(
 )
 
 
-# When bot starts
+# =========================
+# BOT STARTUP
+# =========================
+
 @bot.event
 async def on_ready():
     print(f"Bot is online as {bot.user}")
+    print("Nova AI is ready! 🤖")
 
 
-# Normal message replies
+# =========================
+# NORMAL MESSAGE REPLIES
+# =========================
+
 @bot.event
 async def on_message(message):
+
     if message.author.bot:
         return
 
@@ -59,21 +68,30 @@ async def on_message(message):
             f"Good night {message.author.mention}! 🌙"
         )
 
-    # Required so ! commands continue working
+    # IMPORTANT:
+    # This allows ! commands to work
     await bot.process_commands(message)
 
 
-# !hello command
+# =========================
+# !HELLO COMMAND
+# =========================
+
 @bot.command()
 async def hello(ctx):
+
     await ctx.send(
         f"Hello {ctx.author.mention}! 👋"
     )
 
 
-# !rules command
+# =========================
+# !RULES COMMAND
+# =========================
+
 @bot.command()
 async def rules(ctx):
+
     await ctx.send(
         "**Server Rules 📜**\n"
         "1. Respect everyone.\n"
@@ -83,16 +101,21 @@ async def rules(ctx):
     )
 
 
-# !help command
+# =========================
+# !HELP COMMAND
+# =========================
+
 @bot.command()
 async def help(ctx):
+
     await ctx.send(
-        "**Bot Commands 🤖**\n"
+        "**Nova AI Commands 🤖**\n\n"
         "`!hello` - Say hello\n"
         "`!rules` - Show server rules\n"
-        "`!help` - Show commands\n"
-        "`hi` - Get a greeting\n"
-        "`hello` - Get a greeting\n"
+        "`!help` - Show bot commands\n\n"
+        "**Automatic Replies 💬**\n"
+        "`hi` - Greeting\n"
+        "`hello` - Greeting\n"
         "`good morning` - Morning greeting\n"
         "`good afternoon` - Afternoon greeting\n"
         "`good evening` - Evening greeting\n"
@@ -100,5 +123,8 @@ async def help(ctx):
     )
 
 
-# Start bot using the GitHub Secret
+# =========================
+# START BOT
+# =========================
+
 bot.run(os.environ["DISCORD_TOKEN"])
