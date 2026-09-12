@@ -7,7 +7,12 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 # Create bot
-bot = commands.Bot(command_prefix="!", intents=intents, help_command=None)
+# help_command=None disables Discord.py's built-in !help command
+bot = commands.Bot(
+    command_prefix="!",
+    intents=intents,
+    help_command=None
+)
 
 
 # When bot starts
@@ -25,31 +30,45 @@ async def on_message(message):
     text = message.content.lower().strip()
 
     if text == "hi":
-        await message.channel.send(f"Hi {message.author.mention} 👋")
+        await message.channel.send(
+            f"Hi {message.author.mention} 👋"
+        )
 
     elif text == "hello":
-        await message.channel.send(f"Hello {message.author.mention}! 👋")
+        await message.channel.send(
+            f"Hello {message.author.mention}! 👋"
+        )
 
     elif text == "good morning":
-        await message.channel.send(f"Good morning {message.author.mention}! ☀️")
+        await message.channel.send(
+            f"Good morning {message.author.mention}! ☀️"
+        )
 
     elif text == "good afternoon":
-        await message.channel.send(f"Good afternoon {message.author.mention}! 🌤️")
+        await message.channel.send(
+            f"Good afternoon {message.author.mention}! 🌤️"
+        )
 
     elif text == "good evening":
-        await message.channel.send(f"Good evening {message.author.mention}! 🌆")
+        await message.channel.send(
+            f"Good evening {message.author.mention}! 🌆"
+        )
 
     elif text == "good night":
-        await message.channel.send(f"Good night {message.author.mention}! 🌙")
+        await message.channel.send(
+            f"Good night {message.author.mention}! 🌙"
+        )
 
-    # Required for ! commands
+    # Required so ! commands continue working
     await bot.process_commands(message)
 
 
 # !hello command
 @bot.command()
 async def hello(ctx):
-    await ctx.send(f"Hello {ctx.author.mention}! 👋")
+    await ctx.send(
+        f"Hello {ctx.author.mention}! 👋"
+    )
 
 
 # !rules command
@@ -73,9 +92,13 @@ async def help(ctx):
         "`!rules` - Show server rules\n"
         "`!help` - Show commands\n"
         "`hi` - Get a greeting\n"
-        "`hello` - Get a greeting"
+        "`hello` - Get a greeting\n"
+        "`good morning` - Morning greeting\n"
+        "`good afternoon` - Afternoon greeting\n"
+        "`good evening` - Evening greeting\n"
+        "`good night` - Night greeting"
     )
 
 
-# Start bot using GitHub Secret
+# Start bot using the GitHub Secret
 bot.run(os.environ["DISCORD_TOKEN"])
