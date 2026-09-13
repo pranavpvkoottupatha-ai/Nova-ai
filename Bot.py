@@ -1,3 +1,5 @@
+
+
 import discord
 from discord.ext import commands
 import os
@@ -9,6 +11,7 @@ import os
 intents = discord.Intents.default()
 intents.message_content = True
 
+# Disable Discord.py's built-in !help command
 bot = commands.Bot(
     command_prefix="!",
     intents=intents,
@@ -27,7 +30,7 @@ async def on_ready():
 
 
 # =========================
-# NORMAL MESSAGE REPLIES
+# AUTOMATIC MESSAGE REPLIES
 # =========================
 
 @bot.event
@@ -68,30 +71,27 @@ async def on_message(message):
             f"Good night {message.author.mention}! 🌙"
         )
 
-    # IMPORTANT:
-    # This allows ! commands to work
+    # Allows ! commands to work
     await bot.process_commands(message)
 
 
 # =========================
-# !HELLO COMMAND
+# !HELLO
 # =========================
 
 @bot.command()
 async def hello(ctx):
-
     await ctx.send(
         f"Hello {ctx.author.mention}! 👋"
     )
 
 
 # =========================
-# !RULES COMMAND
+# !RULES
 # =========================
 
 @bot.command()
 async def rules(ctx):
-
     await ctx.send(
         "**Server Rules 📜**\n"
         "1. Respect everyone.\n"
@@ -102,17 +102,16 @@ async def rules(ctx):
 
 
 # =========================
-# !HELP COMMAND
+# !HELP
 # =========================
 
 @bot.command()
 async def help(ctx):
-
     await ctx.send(
         "**Nova AI Commands 🤖**\n\n"
         "`!hello` - Say hello\n"
         "`!rules` - Show server rules\n"
-        "`!help` - Show bot commands\n\n"
+        "`!help` - Show commands\n\n"
         "**Automatic Replies 💬**\n"
         "`hi` - Greeting\n"
         "`hello` - Greeting\n"
